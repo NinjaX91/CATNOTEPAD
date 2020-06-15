@@ -19,7 +19,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 /**
- * Created by MohMah on 8/19/2016.
+ * Created by MohMah on 8/19/2016. modified 6/15/2020
  */
 class Adapter extends RecyclerView.Adapter{
 

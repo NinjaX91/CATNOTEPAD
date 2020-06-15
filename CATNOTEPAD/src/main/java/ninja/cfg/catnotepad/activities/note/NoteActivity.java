@@ -50,7 +50,7 @@ import com.microsoft.appcenter.crashes.Crashes;
 
 
 /**
- * Created by MohMah on 8/20/2016.
+ * Created by MohMah on 8/20/2016. modified 6/15/2020
  */
 @IntentBuilder
 public class NoteActivity extends AppCompatActivity{

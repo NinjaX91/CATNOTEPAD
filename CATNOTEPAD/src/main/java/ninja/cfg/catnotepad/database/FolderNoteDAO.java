@@ -14,7 +14,7 @@ import ninja.cfg.catnotepad.models.FolderNoteRelation_Table;
 import ninja.cfg.catnotepad.models.Note;
 
 /**
- * Created by MohMah on 8/20/2016.
+ * Created by MohMah on 8/20/2016. modified 6/15/2020
  */
 public class FolderNoteDAO{
 	public static List<Folder> getFolders(int noteId){

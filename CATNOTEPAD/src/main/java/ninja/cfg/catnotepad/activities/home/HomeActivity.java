@@ -25,7 +25,7 @@ import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.distribute.Distribute;
 
 /**
- * Created by MohMah on 8/17/2016.
+ * Created by MohMah on 8/17/2016. Modified by NinjaX91 to add App Center SDK and Intune SDK 6/15/2020
  */
 public class HomeActivity extends AppCompatActivity{
 	private static final String TAG = "HomeActivity";

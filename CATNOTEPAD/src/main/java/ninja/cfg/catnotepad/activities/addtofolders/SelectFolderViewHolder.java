@@ -15,7 +15,7 @@ import ninja.cfg.catnotepad.models.Folder;
 import ninja.cfg.catnotepad.models.Note;
 
 /**
- * Created by MohMah on 8/19/2016.
+ * Created by MohMah on 8/19/2016. modified 6/15/2020
  */
 class SelectFolderViewHolder extends RecyclerView.ViewHolder{
 	private static final String TAG = "SelectFolderViewHolder";

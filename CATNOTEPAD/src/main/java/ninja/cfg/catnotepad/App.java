@@ -11,7 +11,7 @@ import com.facebook.stetho.Stetho;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 /**
- * Created by MohMah on 8/17/2016.
+ * Created by MohMah on 8/17/2016. Modified by NinjaX91 to add App Center SDK and Intune SDK 6/15/2020
  */
 public class App extends Application {
     public static volatile Context CONTEXT;
