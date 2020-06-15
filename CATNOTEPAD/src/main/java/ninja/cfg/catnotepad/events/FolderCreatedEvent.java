@@ -3,7 +3,7 @@ package ninja.cfg.catnotepad.events;
 import ninja.cfg.catnotepad.models.Folder;
 
 /**
- * Created by MohMah on 8/19/2016.
+ * Created by MohMah on 8/19/2016. modified 6/15/2020
  */
 public class FolderCreatedEvent{
 	private Folder folder;

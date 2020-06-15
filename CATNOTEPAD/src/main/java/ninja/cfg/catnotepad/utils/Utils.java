@@ -14,7 +14,7 @@ import ninja.cfg.catnotepad.App;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Created by MohMah on 8/19/2016.
+ * Created by MohMah on 8/19/2016. Modified 6/15/2020
  */
 public class Utils{
 	public static float getPixels(int unit, float size){

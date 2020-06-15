@@ -22,7 +22,7 @@ import ninja.cfg.catnotepad.activities.note.NoteActivityIntentBuilder;
 import ninja.cfg.catnotepad.models.Folder;
 
 /**
- * Created by MohMah on 8/21/2016.
+ * Created by MohMah on 8/21/2016. modified 6/15/2020
  */
 public class NoteListFragment extends Fragment{
 	public static final String FOLDER = "FOLDER";

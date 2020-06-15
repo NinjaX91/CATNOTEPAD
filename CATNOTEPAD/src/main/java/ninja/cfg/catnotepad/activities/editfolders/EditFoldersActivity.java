@@ -13,7 +13,7 @@ import ninja.cfg.catnotepad.R;
 import se.emilsjolander.intentbuilder.IntentBuilder;
 
 /**
- * Created by MohMah on 8/19/2016.
+ * Created by MohMah on 8/19/2016. modified 6/15/2020
  */
 @IntentBuilder
 public class EditFoldersActivity extends AppCompatActivity{

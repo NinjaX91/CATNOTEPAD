@@ -15,7 +15,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import ninja.cfg.catnotepad.App;
 
 /**
- * Created by MohMah on 8/18/2016.
+ * Created by MohMah on 8/18/2016. modified 6/15/2020
  */
 public class ViewUtils{
 	public static View getEmptyView(Context context, int width, int height, @ColorRes int backgroundColor){

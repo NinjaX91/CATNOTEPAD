@@ -30,7 +30,7 @@ import static com.commonsware.cwac.richedit.RichEditText.SUPERSCRIPT;
 import static com.commonsware.cwac.richedit.RichEditText.UNDERLINE;
 
 /**
- * Created by MohMah on 8/23/2016.
+ * Created by MohMah on 8/23/2016. Modified 6/15/2020
  */
 public class RichEditWidgetView extends HorizontalScrollView{
 	@BindView(R.id.linear_layout) LinearLayout linearLayout;

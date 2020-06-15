@@ -11,7 +11,7 @@ import ninja.cfg.catnotepad.models.Folder;
 import ninja.cfg.catnotepad.models.Note;
 
 /**
- * Created by MohMah on 8/17/2016.
+ * Created by MohMah on 8/17/2016. Modified by NinjaX91 to add App Center SDK and Intune SDK 6/15/2020
  */
 @Database(name = AppDatabase.NAME, version = AppDatabase.VERSION)
 public class AppDatabase{
