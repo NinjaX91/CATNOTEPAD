@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     compileOptions {
         targetCompatibility = "8"
         sourceCompatibility = "8"
@@ -26,10 +26,12 @@ android {
 
     defaultConfig {
         applicationId "ninja.cfg.catnotepad"
-        minSdkVersion 23
-        targetSdkVersion 29
-        versionCode 4
-        versionName "1.2"
+        minSdkVersion 28
+        targetSdkVersion 30
+        versionCode 6
+        versionName '1.4'
+        signingConfig signingConfigs.debug
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -38,10 +40,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
+            debuggable false
+
             //      minifyEnabled true
             //      shrinkResources true
             //      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    buildToolsVersion '30.0.0'
+    dependenciesInfo {
+        includeInApk true
+        includeInBundle true
     }
 }
 
@@ -67,22 +76,22 @@ def dbflow_version = "4.2.4"
 
 dependencies {
     //noinspection GradleCompatible
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
     annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
     implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
     implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
-    implementation 'com.jakewharton:butterknife:10.0.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation 'se.emilsjolander:intentbuilder-api:0.14.0'
     annotationProcessor 'se.emilsjolander:intentbuilder-compiler:0.14.0'
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'com.github.greenfrvr:hashtag-view:1.2.1'
-    implementation 'com.facebook.stetho:stetho:1.3.1'
+    implementation 'com.facebook.stetho:stetho:1.5.1'
     implementation 'com.commonsware.cwac:richedit:0.5.3'
     implementation 'com.github.gcacace:signature-pad:1.2.0'
-    implementation 'com.birbit:android-priority-jobqueue:2.0.0'
-    implementation 'org.ocpsoft.prettytime:prettytime:3.2.7.Final'
+    implementation 'com.birbit:android-priority-jobqueue:3.0.0'
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.5.Final'
     implementation 'com.nbsp:library:1.09'
     implementation project(path: ':Microsoft.Intune.MAM.SDK')
 //Added Values for App Center MS
