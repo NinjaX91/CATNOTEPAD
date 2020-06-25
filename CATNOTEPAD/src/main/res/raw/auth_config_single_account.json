@@ -1,0 +1,13 @@
+{
+"client_id" : "3a5b020f-2122-4df7-9d86-e5db38bc84fe",
+"authorization_user_agent" : "DEFAULT",
+"redirect_uri" : "msauth://ninja.cfg.catnotepad/ARUP23wQ8PO%2FlcLJBuT7NnMNkfc%3D",
+"account_mode" : "SINGLE",
+"broker_redirect_uri_registered": true,
+"authorities" : [
+{
+"type": "AAD",
+"authority_url": "https://login.microsoftonline.com/common"
+}
+]
+}
