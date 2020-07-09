@@ -18,7 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ninja.cfg.catnotepad.App;
+import ninja.cfg.catnotepad.CatApp;
 import ninja.cfg.catnotepad.R;
 import ninja.cfg.catnotepad.utils.Utils;
 
@@ -146,12 +146,12 @@ public class RichEditWidgetView extends HorizontalScrollView{
 
 	private void setActionOn(ImageButton view){
 		view.setBackgroundResource(R.drawable.background_rich_edit_action_on);
-		view.setColorFilter(App.CONTEXT.getResources().getColor(R.color.md_blue_grey_500));
+		view.setColorFilter(CatApp.CONTEXT.getResources().getColor(R.color.md_blue_grey_500));
 	}
 
 	private void setActionOff(ImageButton view){
 		view.setBackgroundResource(0);
-		view.setColorFilter(App.CONTEXT.getResources().getColor(R.color.md_blue_grey_300));
+		view.setColorFilter(CatApp.CONTEXT.getResources().getColor(R.color.md_blue_grey_300));
 	}
 
 	private class OnTouchListener implements View.OnTouchListener{

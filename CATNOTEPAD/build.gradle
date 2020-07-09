@@ -28,10 +28,11 @@ android {
         applicationId "ninja.cfg.catnotepad"
         minSdkVersion 28
         targetSdkVersion 30
-        versionCode 8
-        versionName '1.8'
+        versionCode 10
+        versionName 'X'
         signingConfig signingConfigs.debug
         multiDexEnabled true
+        versionNameSuffix 'Rel'
     }
     buildTypes {
         release {
@@ -93,7 +94,7 @@ dependencies {
     implementation 'com.birbit:android-priority-jobqueue:3.0.0'
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.5.Final'
     implementation 'com.nbsp:library:1.09'
-    implementation project(path: ':Microsoft.Intune.MAM.SDK')
+    implementation project(path: ':MAMSDK')
 //Added Values for App Center MS
     def appCenterSdkVersion = '3.2.1'
     implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"

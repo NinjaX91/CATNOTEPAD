@@ -10,7 +10,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import ninja.cfg.catnotepad.App;
+import ninja.cfg.catnotepad.CatApp;
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -32,7 +32,7 @@ public class Utils{
 
 	public static void hideSoftKeyboard(View view){
 		InputMethodManager inputMethodManager =
-				(InputMethodManager) App.CONTEXT.getSystemService(Activity.INPUT_METHOD_SERVICE);
+				(InputMethodManager) CatApp.CONTEXT.getSystemService(Activity.INPUT_METHOD_SERVICE);
 		if (view != null) inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 	}
 

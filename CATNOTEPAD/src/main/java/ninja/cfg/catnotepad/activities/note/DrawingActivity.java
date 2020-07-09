@@ -9,7 +9,7 @@ import android.view.View;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.github.gcacace.signaturepad.views.SignaturePad;
-import ninja.cfg.catnotepad.App;
+import ninja.cfg.catnotepad.CatApp;
 import ninja.cfg.catnotepad.R;
 import ninja.cfg.catnotepad.database.NotesDAO;
 import ninja.cfg.catnotepad.jobs.SaveDrawingJob;
@@ -61,7 +61,7 @@ public class DrawingActivity extends AppCompatActivity{
 	@Override protected void onStop(){
 		super.onStop();
 		if (hasDrawnSomething)
-			App.JOB_MANAGER.addJobInBackground(new SaveDrawingJob(drawingPad, note.getId()));
+			CatApp.JOB_MANAGER.addJobInBackground(new SaveDrawingJob(drawingPad, note.getId()));
 	}
 
 	@Override protected void onStart(){

@@ -12,7 +12,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
-import ninja.cfg.catnotepad.App;
+import ninja.cfg.catnotepad.CatApp;
 
 /**
  * Created by MohMah on 8/18/2016. modified 6/15/2020
@@ -29,13 +29,13 @@ public class ViewUtils{
 	public static void tintMenu(Menu menu, @IdRes int menuId, @ColorRes int colorRes){
 		Drawable drawable = menu.findItem(menuId).getIcon();
 		drawable = DrawableCompat.wrap(drawable);
-		DrawableCompat.setTint(drawable, ContextCompat.getColor(App.CONTEXT, colorRes));
+		DrawableCompat.setTint(drawable, ContextCompat.getColor(CatApp.CONTEXT, colorRes));
 		menu.findItem(menuId).setIcon(drawable);
 	}
 
 	public static Drawable tintDrawable(@DrawableRes int drawableRes, @ColorRes int colorRes){
-		final Drawable drawable = App.CONTEXT.getResources().getDrawable(drawableRes);
-		drawable.setColorFilter(App.CONTEXT.getResources().getColor(colorRes), PorterDuff.Mode.SRC_ATOP);
+		final Drawable drawable = CatApp.CONTEXT.getResources().getDrawable(drawableRes);
+		drawable.setColorFilter(CatApp.CONTEXT.getResources().getColor(colorRes), PorterDuff.Mode.SRC_ATOP);
 		return drawable;
 	}
 }

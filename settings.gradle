@@ -1,1 +1,1 @@
-include ':CATNOTEPAD', ':Microsoft.Intune.MAM.SDK'
+include ':CATNOTEPAD', ':MAMSDK'

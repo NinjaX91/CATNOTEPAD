@@ -1,12 +1,12 @@
 <manifest package="ninja.cfg.catnotepad"
           xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-	      android:versionCode="8"
-	      android:versionName="1.8">
+	      android:versionCode="10"
+	      android:versionName="X">
 
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<application
-			android:name="ninja.cfg.catnotepad.App"
+			android:name="ninja.cfg.catnotepad.CatApp"
 			android:allowBackup="true"
 			android:icon="@mipmap/ic_launcher"
 			android:label="@string/app_name"
@@ -64,6 +64,28 @@
 				android:label="Edit Folders"
 				>
 		</activity>
+		<activity
+			android:name="com.microsoft.appcenter.distribute.DeepLinkActivity"
+			android:theme="@android:style/Theme.NoDisplay">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+
+				<data
+					android:host="updates"
+					android:path="/"
+					android:scheme="appcenter" />
+			</intent-filter>
+		</activity>
+
+		<receiver android:name="com.microsoft.appcenter.distribute.DownloadManagerReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+				<action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
+			</intent-filter>
+		</receiver>
 	</application>
 
 </manifest>
