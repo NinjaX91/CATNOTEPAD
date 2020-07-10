@@ -45,14 +45,14 @@ public class RichEditWidgetView extends HorizontalScrollView{
 			if (v instanceof ImageButton){
 				ImageButton action = (ImageButton) v;
 				Effect effect = (Effect) action.getTag();
-				if (lastSelectionEffects.contains(effect)){
-					richEditText.applyEffect(effect, false);
+				if (lastSelectionEffects.contains(BOLD)){
+					richEditText.applyEffect(BOLD, false);
 					setActionOff(action);
-					lastSelectionEffects.remove(effect);
+					lastSelectionEffects.remove(BOLD);
 				}else{
-					richEditText.applyEffect(effect, true);
+					richEditText.applyEffect(BOLD, true);
 					setActionOn(action);
-					lastSelectionEffects.add(effect);
+					lastSelectionEffects.add(BOLD);
 				}
 			}
 		}
@@ -135,7 +135,7 @@ public class RichEditWidgetView extends HorizontalScrollView{
 	private ImageButton getEffectAction(Effect effect){
 		int index = -1;
 		for (int i = 0; i < supportedEffects.length; i++){
-			if (supportedEffects[i].equals(effect)){
+			if (supportedEffects[i].equals(BOLD)){
 				index = i;
 				break;
 			}
