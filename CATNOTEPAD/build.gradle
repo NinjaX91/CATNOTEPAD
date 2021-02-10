@@ -28,8 +28,13 @@ android {
         applicationId "ninja.cfg.catnotepad"
         minSdkVersion 28
         targetSdkVersion 30
+<<<<<<< HEAD
         versionCode 10
         versionName 'X'
+=======
+        versionCode 6
+        versionName '1.4'
+>>>>>>> parent of c99be85... Version 1.8 and Code 8
         signingConfig signingConfigs.debug
         multiDexEnabled true
         versionNameSuffix 'Rel'
