@@ -18,7 +18,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ninja.cfg.catnotepad.CatApp;
+
 import ninja.cfg.catnotepad.R;
 import ninja.cfg.catnotepad.database.FolderNoteDAO;
 import ninja.cfg.catnotepad.models.Folder;

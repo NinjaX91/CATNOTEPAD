@@ -7,34 +7,17 @@ android {
         targetCompatibility = "8"
         sourceCompatibility = "8"
     }
-    //copy the mapping files somewhere else so they are not overridden.
-//  applicationVariants.all { variant ->
-//    variant.outputs.each { output ->
-//      if (variant.getBuildType().name == 'release') {
-//        variant.assemble.doLast {
-//          copy {
-//            from variant.mappingFile
-//            into "${rootDir}/mappings"
-//            rename { String fileName -> "mapping-${variant.name}-v.${defaultConfig.versionName}-" + getDate() + ".txt"
-//            }
-//          }
-//        }
-//      }
-//    }
-//  }
+
 
 
     defaultConfig {
         applicationId "ninja.cfg.catnotepad"
         minSdkVersion 28
         targetSdkVersion 30
-<<<<<<< HEAD
-        versionCode 10
-        versionName 'X'
-=======
+
         versionCode 6
         versionName '1.4'
->>>>>>> parent of c99be85... Version 1.8 and Code 8
+
         signingConfig signingConfigs.debug
         multiDexEnabled true
         versionNameSuffix 'Rel'
@@ -109,7 +92,7 @@ dependencies {
     implementation 'com.birbit:android-priority-jobqueue:3.0.0'
     implementation 'org.ocpsoft.prettytime:prettytime:5.0.0.Final'
     implementation 'com.nbsp:library:1.09'
-    implementation project(path: ':MAMSDK')
+    //implementation project(path: ':MAMSDK')
 //Added Values for App Center MS
     def appCenterSdkVersion = '3.2.1'
     implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
