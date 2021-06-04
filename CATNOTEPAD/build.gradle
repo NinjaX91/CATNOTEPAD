@@ -1,8 +1,93 @@
 apply plugin: 'com.android.application'
 import java.util.regex.Pattern
 
+task('increaseVersionCode') doLast{
+    def manifestFile = file("src/main/AndroidManifest.xml")
+    def pattern = Pattern.compile("versionCode=\"(\\d+)\"")
+    def manifestText = manifestFile.getText()
+    def matcher = pattern.matcher(manifestText)
+    matcher.find()
+    def versionCode = Integer.parseInt(matcher.group(1))
+    def manifestContent = matcher.replaceAll("versionCode=\"" + ++versionCode + "\"")
+    manifestFile.write(manifestContent)
+}
+
+task('incrementVersionName') doLast{
+    def manifestFile = file("src/main/AndroidManifest.xml")
+    def patternVersionNumber = Pattern.compile("versionName=\"(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)\"")
+    def manifestText = manifestFile.getText()
+    def matcherVersionNumber = patternVersionNumber.matcher(manifestText)
+    matcherVersionNumber.find()
+    def majorVersion = Integer.parseInt(matcherVersionNumber.group(1))
+    def minorVersion = Integer.parseInt(matcherVersionNumber.group(2))
+    def pointVersion = Integer.parseInt(matcherVersionNumber.group(3))
+    def buildVersion = Integer.parseInt(matcherVersionNumber.group(4))
+    def mNextVersionName = majorVersion + "." + minorVersion + "." + pointVersion + "." + (buildVersion + 1)
+    def manifestContent = matcherVersionNumber.replaceAll("versionName=\"" + mNextVersionName + "\"")
+    manifestFile.write(manifestContent)
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name == 'generateReleaseBuildConfig' || task.name == 'generateDebugBuildConfig') {
+        task.dependsOn 'increaseVersionCode'
+        task.dependsOn 'incrementVersionName'
+        task.dependsOn 'increaseVersionCode1'
+        //      task.dependsOn 'incrementVersionName1'
+
+    }
+}
+task('increaseVersionCode1') doLast{
+    def buildFile = file("build.gradle")
+    def pattern = Pattern.compile("versionCode\\s+(\\d+)")
+    def manifestText = buildFile.getText()
+    def matcher = pattern.matcher(manifestText)
+    matcher.find()
+    def versionCode = Integer.parseInt(matcher.group(1))
+    def manifestContent = matcher.replaceAll("versionCode " + ++versionCode)
+    buildFile.write(manifestContent)
+}
+
+def d1 = Calendar.getInstance();
+def buildmonth = d1.toYearMonth();
+
+
+def versionPropsFile = file('version.properties')
+def versionBuild
+
+/*Setting default value for versionBuild which is the last incremented value stored in the file */
+if (versionPropsFile.canRead()) {
+    def Properties versionProps = new Properties()
+    versionProps.load(new FileInputStream(versionPropsFile))
+    versionBuild = versionProps['VERSION_BUILD'].toInteger()
+} else {
+    throw new FileNotFoundException("Could not read version.properties!")
+}
+
+
+/*Wrapping inside a method avoids auto incrementing on every gradle task run. Now it runs only when we build apk*/
+ext.autoIncrementBuildNumber = {
+
+    if (versionPropsFile.canRead()) {
+        def Properties versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionPropsFile))
+        versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
+        versionProps['VERSION_BUILD'] = versionBuild.toString()
+        versionProps.store(versionPropsFile.newWriter(), null)
+    } else {
+        throw new FileNotFoundException("Could not read version.properties!")
+    }
+}
+
+
+
 android {
     compileSdkVersion 30
+    compileOptions {
+        targetCompatibility = "8"
+        sourceCompatibility = "8"
+    }
+
+
     signingConfigs {
         Upload {
             storeFile file('C:\\Temp\\CATNOTEPAD\\KeyStore\\Catnotepad.jks')
@@ -12,115 +97,17 @@ android {
         }
     }
 
-    task('increaseVersionCode') doLast{
-        def manifestFile = file("src/main/AndroidManifest.xml")
-        def pattern = Pattern.compile("versionCode=\"(\\d+)\"")
-        def manifestText = manifestFile.getText()
-        def matcher = pattern.matcher(manifestText)
-        matcher.find()
-        def versionCode = Integer.parseInt(matcher.group(1))
-        def manifestContent = matcher.replaceAll("versionCode=\"" + ++versionCode + "\"")
-        manifestFile.write(manifestContent)
-    }
-
-    task('incrementVersionName') doLast{
-        def manifestFile = file("src/main/AndroidManifest.xml")
-        def patternVersionNumber = Pattern.compile("versionName=\"(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)\"")
-        def manifestText = manifestFile.getText()
-        def matcherVersionNumber = patternVersionNumber.matcher(manifestText)
-        matcherVersionNumber.find()
-        def majorVersion = Integer.parseInt(matcherVersionNumber.group(1))
-        def minorVersion = Integer.parseInt(matcherVersionNumber.group(2))
-        def pointVersion = Integer.parseInt(matcherVersionNumber.group(3))
-        def buildVersion = Integer.parseInt(matcherVersionNumber.group(4))
-        def mNextVersionName = majorVersion + "." + minorVersion + "." + pointVersion + "." + (buildVersion + 1)
-        def manifestContent = matcherVersionNumber.replaceAll("versionName=\"" + mNextVersionName + "\"")
-        manifestFile.write(manifestContent)
-    }
-
-    tasks.whenTaskAdded { task ->
-        if (task.name == 'generateReleaseBuildConfig' || task.name == 'generateDebugBuildConfig') {
-            task.dependsOn 'increaseVersionCode'
-            task.dependsOn 'incrementVersionName'
-            task.dependsOn 'increaseVersionCode1'
-            //      task.dependsOn 'incrementVersionName1'
-
-        }
-    }
-    task('increaseVersionCode1') doLast{
-        def buildFile = file("build.gradle")
-        def pattern = Pattern.compile("versionCode\\s+(\\d+)")
-        def manifestText = buildFile.getText()
-        def matcher = pattern.matcher(manifestText)
-        matcher.find()
-        def versionCode = Integer.parseInt(matcher.group(1))
-        def manifestContent = matcher.replaceAll("versionCode " + ++versionCode)
-        buildFile.write(manifestContent)
-    }
-    task('incrementVersionName1') doLast{
-        def gradleFile = file("build.gradle")
-
-        def patternVersionNumber = Pattern.compile("versionName\"\\s+(\\d+)\\.(\\d+)\\.(\\d+)\\.(\\d+)\"")
-        def gradleText = gradleFile.getText()
-        def matcherVersionNumber = patternVersionNumber.matcher(gradleText)
-        matcherVersionNumber.find()
-        def majorVersion = Integer.parseInt(matcherVersionNumber.group(1))
-        def minorVersion = Integer.parseInt(matcherVersionNumber.group(2))
-        def pointVersion = Integer.parseInt(matcherVersionNumber.group(3))
-        def buildVersion = Integer.parseInt(matcherVersionNumber.group(4))
-        def mNextVersionName = majorVersion + "." + minorVersion + "." + pointVersion + "." + (buildVersion + 1)
-        def gradleContent = matcherVersionNumber.replaceAll("versionName " + ++mNextVersionName)
-        gradleFile.write(gradleContent)
-    }
-    def d1 = Calendar.getInstance();
-    def buildmonth = d1.toYearMonth();
-
-
-    def versionPropsFile = file('version.properties')
-    def versionBuild
-
-    /*Setting default value for versionBuild which is the last incremented value stored in the file */
-    if (versionPropsFile.canRead()) {
-        def Properties versionProps = new Properties()
-        versionProps.load(new FileInputStream(versionPropsFile))
-        versionBuild = versionProps['VERSION_BUILD'].toInteger()
-    } else {
-        throw new FileNotFoundException("Could not read version.properties!")
-    }
-
-
-    /*Wrapping inside a method avoids auto incrementing on every gradle task run. Now it runs only when we build apk*/
-    ext.autoIncrementBuildNumber = {
-
-        if (versionPropsFile.canRead()) {
-            def Properties versionProps = new Properties()
-            versionProps.load(new FileInputStream(versionPropsFile))
-            versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
-            versionProps['VERSION_BUILD'] = versionBuild.toString()
-            versionProps.store(versionPropsFile.newWriter(), null)
-        } else {
-            throw new FileNotFoundException("Could not read version.properties!")
-        }
-    }
-
-    compileOptions {
-        targetCompatibility = "8"
-        sourceCompatibility = "8"
-    }
-
-
-
     defaultConfig {
         applicationId "ninja.cfg.catnotepad"
         minSdkVersion 28
         targetSdkVersion 30
 
-        versionCode 13
-        versionName "2.0.0." + versionCode + "." + buildmonth
+        versionCode 14
+        versionName "2.0.0." + versionCode
 
         signingConfig signingConfigs.debug
         multiDexEnabled true
-        versionNameSuffix 'Rel'
+        versionNameSuffix 'Rel' + buildmonth
         applicationIdSuffix 'CAT'
         testApplicationId 'ninja.cfg.catnotepad'
     }
