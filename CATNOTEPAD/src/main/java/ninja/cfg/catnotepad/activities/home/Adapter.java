@@ -13,13 +13,13 @@ import ninja.cfg.catnotepad.events.NoteEditedEvent;
 import ninja.cfg.catnotepad.models.Folder;
 import ninja.cfg.catnotepad.models.Note;
 import ninja.cfg.catnotepad.utils.SimpleViewHolder;
-import ninja.cfg.catnotepad.Views.NoteCardView;
+import ninja.cfg.catnotepad.views.NoteCardView;
 import java.util.List;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 /**
- * Created by MohMah on 8/19/2016. modified 6/15/2020
+ * Created by MohMah on 8/19/2016.
  */
 class Adapter extends RecyclerView.Adapter{
 

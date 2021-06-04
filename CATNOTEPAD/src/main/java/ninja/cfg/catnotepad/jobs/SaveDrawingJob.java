@@ -16,7 +16,7 @@ import ninja.cfg.catnotepad.utils.Utils;
 import org.greenrobot.eventbus.EventBus;
 
 /**
- * Created by MohMah on 8/21/2016. modified 6/15/2020
+ * Created by MohMah on 8/21/2016.
  */
 public class SaveDrawingJob extends Job{
 	private static final String TAG = "SaveDrawingJob";

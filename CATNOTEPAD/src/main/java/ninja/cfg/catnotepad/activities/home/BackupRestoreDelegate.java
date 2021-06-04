@@ -27,7 +27,7 @@ import ninja.cfg.catnotepad.R;
 import ninja.cfg.catnotepad.database.AppDatabase;
 
 /**
- * Created by MohMah on 8/22/2016. Modified by NinjaX91 to add App Center SDK and Intune SDK
+ * Created by MohMah on 8/22/2016.
  */
 class BackupRestoreDelegate{
 	static final int PICK_RESTORE_FILE_REQUEST_CODE = 12;

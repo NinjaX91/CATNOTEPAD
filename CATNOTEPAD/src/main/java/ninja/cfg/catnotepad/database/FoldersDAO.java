@@ -8,7 +8,7 @@ import ninja.cfg.catnotepad.models.Folder;
 import ninja.cfg.catnotepad.models.Folder_Table;
 
 /**
- * Created by MohMah on 8/19/2016. modified 6/15/2020
+ * Created by MohMah on 8/19/2016.
  */
 public class FoldersDAO{
 	public static List<Folder> getLatestFolders(){

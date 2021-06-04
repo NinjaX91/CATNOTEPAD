@@ -10,11 +10,11 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import ninja.cfg.catnotepad.CatApp;
+import ninja.cfg.catnotepad.CatNotepad;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Created by MohMah on 8/19/2016. Modified 6/15/2020
+ * Created by MohMah on 8/19/2016.
  */
 public class Utils{
 	public static float getPixels(int unit, float size){
@@ -32,7 +32,7 @@ public class Utils{
 
 	public static void hideSoftKeyboard(View view){
 		InputMethodManager inputMethodManager =
-				(InputMethodManager) CatApp.CONTEXT.getSystemService(Activity.INPUT_METHOD_SERVICE);
+				(InputMethodManager) CatNotepad.CONTEXT.getSystemService(Activity.INPUT_METHOD_SERVICE);
 		if (view != null) inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 	}
 

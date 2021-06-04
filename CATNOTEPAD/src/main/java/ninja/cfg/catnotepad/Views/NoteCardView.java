@@ -1,4 +1,4 @@
-package ninja.cfg.catnotepad.Views;
+package ninja.cfg.catnotepad.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -18,7 +18,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+import ninja.cfg.catnotepad.CatNotepad;
 import ninja.cfg.catnotepad.R;
 import ninja.cfg.catnotepad.database.FolderNoteDAO;
 import ninja.cfg.catnotepad.models.Folder;
@@ -26,7 +26,7 @@ import ninja.cfg.catnotepad.models.Note;
 import ninja.cfg.catnotepad.utils.Utils;
 
 /**
- * Created by MohMah on 8/19/2016. modified 6/15/2020
+ * Created by MohMah on 8/19/2016.
  */
 public class NoteCardView extends CardView{
 
@@ -50,7 +50,7 @@ public class NoteCardView extends CardView{
 		View view = LayoutInflater.from(context).inflate(R.layout.view_note_card, this, true);
 		RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
-		int noteGap = (int) Utils.dp2px(CatApp.CONTEXT.getResources().getDimensionPixelSize(R.dimen.notes_gap)) / 2;
+		int noteGap = (int) Utils.dp2px(CatNotepad.CONTEXT.getResources().getDimensionPixelSize(R.dimen.notes_gap)) / 2;
 		lp.setMargins(noteGap, noteGap, 0, 0);
 		view.setLayoutParams(lp);
 		ButterKnife.bind(this, view);

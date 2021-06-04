@@ -21,11 +21,9 @@ import ninja.cfg.catnotepad.activities.editfolders.EditFoldersActivityIntentBuil
 import ninja.cfg.catnotepad.database.FoldersDAO;
 import ninja.cfg.catnotepad.models.Folder;
 import java.util.List;
-import com.microsoft.appcenter.AppCenter;
-import com.microsoft.appcenter.distribute.Distribute;
 
 /**
- * Created by MohMah on 8/17/2016. Modified by NinjaX91 to add App Center SDK and Intune SDK 6/15/2020
+ * Created by MohMah on 8/17/2016.
  */
 public class HomeActivity extends AppCompatActivity{
 	private static final String TAG = "HomeActivity";
@@ -40,7 +38,6 @@ public class HomeActivity extends AppCompatActivity{
 	BackupRestoreDelegate backupRestoreDelegate;
 
 	@Override protected void onCreate(@Nullable Bundle savedInstanceState){
-		AppCenter.start(getApplication(), "9d319f86-e33e-4af2-bd18-8986ba723bb8", Distribute.class);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		ButterKnife.bind(this);

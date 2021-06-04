@@ -21,7 +21,7 @@ import ninja.cfg.catnotepad.models.Folder;
 import ninja.cfg.catnotepad.utils.Utils;
 
 /**
- * Created by MohMah on 8/19/2016. Modified 6/15/2020
+ * Created by MohMah on 8/19/2016.
  */
 public class NewFolderViewHolder extends RecyclerView.ViewHolder implements OpenCloseable{
 	private final Adapter adapter;

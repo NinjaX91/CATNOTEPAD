@@ -16,7 +16,7 @@ import se.emilsjolander.intentbuilder.Extra;
 import se.emilsjolander.intentbuilder.IntentBuilder;
 
 /**
- * Created by MohMah on 8/21/2016. modified 6/15/2020
+ * Created by MohMah on 8/21/2016.
  */
 @IntentBuilder
 public class AddToFoldersActivity extends AppCompatActivity{

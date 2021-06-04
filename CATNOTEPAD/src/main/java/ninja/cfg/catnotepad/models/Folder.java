@@ -12,7 +12,7 @@ import java.util.Date;
 import ninja.cfg.catnotepad.database.AppDatabase;
 
 /**
- * Created by MohMah on 8/17/2016. Modified by NinjaX91 to add App Center SDK and Intune SDK 6/15/2020
+ * Created by MohMah on 8/17/2016.
  */
 @Table(database = AppDatabase.class, allFields = true)
 public class Folder extends BaseModel implements Parcelable{

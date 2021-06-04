@@ -12,10 +12,10 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
-import ninja.cfg.catnotepad.CatApp;
+import ninja.cfg.catnotepad.CatNotepad;
 
 /**
- * Created by MohMah on 8/18/2016. modified 6/15/2020
+ * Created by MohMah on 8/18/2016.
  */
 public class ViewUtils{
 	public static View getEmptyView(Context context, int width, int height, @ColorRes int backgroundColor){
@@ -29,13 +29,13 @@ public class ViewUtils{
 	public static void tintMenu(Menu menu, @IdRes int menuId, @ColorRes int colorRes){
 		Drawable drawable = menu.findItem(menuId).getIcon();
 		drawable = DrawableCompat.wrap(drawable);
-		DrawableCompat.setTint(drawable, ContextCompat.getColor(CatApp.CONTEXT, colorRes));
+		DrawableCompat.setTint(drawable, ContextCompat.getColor(CatNotepad.CONTEXT, colorRes));
 		menu.findItem(menuId).setIcon(drawable);
 	}
 
 	public static Drawable tintDrawable(@DrawableRes int drawableRes, @ColorRes int colorRes){
-		final Drawable drawable = CatApp.CONTEXT.getResources().getDrawable(drawableRes);
-		drawable.setColorFilter(CatApp.CONTEXT.getResources().getColor(colorRes), PorterDuff.Mode.SRC_ATOP);
+		final Drawable drawable = CatNotepad.CONTEXT.getResources().getDrawable(drawableRes);
+		drawable.setColorFilter(CatNotepad.CONTEXT.getResources().getColor(colorRes), PorterDuff.Mode.SRC_ATOP);
 		return drawable;
 	}
 }

@@ -10,7 +10,7 @@ import ninja.cfg.catnotepad.models.Note;
 import ninja.cfg.catnotepad.models.Note_Table;
 
 /**
- * Created by MohMah on 8/21/2016. modified 6/15/2020
+ * Created by MohMah on 8/21/2016.
  */
 public class NotesDAO{
 	public static List<Note> getLatestNotes(Folder folder){

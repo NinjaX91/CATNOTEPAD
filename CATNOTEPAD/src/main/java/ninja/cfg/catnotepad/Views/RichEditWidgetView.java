@@ -18,7 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import ninja.cfg.catnotepad.CatApp;
+import ninja.cfg.catnotepad.CatNotepad;
 import ninja.cfg.catnotepad.R;
 import ninja.cfg.catnotepad.utils.Utils;
 
@@ -30,7 +30,7 @@ import static com.commonsware.cwac.richedit.RichEditText.SUPERSCRIPT;
 import static com.commonsware.cwac.richedit.RichEditText.UNDERLINE;
 
 /**
- * Created by MohMah on 8/23/2016. Modified 6/15/2020
+ * Created by MohMah on 8/23/2016.
  */
 public class RichEditWidgetView extends HorizontalScrollView{
 	@BindView(R.id.linear_layout) LinearLayout linearLayout;
@@ -45,14 +45,14 @@ public class RichEditWidgetView extends HorizontalScrollView{
 			if (v instanceof ImageButton){
 				ImageButton action = (ImageButton) v;
 				Effect effect = (Effect) action.getTag();
-				if (lastSelectionEffects.contains(BOLD)){
-					richEditText.applyEffect(BOLD, false);
+				if (lastSelectionEffects.contains(effect)){
+					richEditText.applyEffect(effect, false);
 					setActionOff(action);
-					lastSelectionEffects.remove(BOLD);
+					lastSelectionEffects.remove(effect);
 				}else{
-					richEditText.applyEffect(BOLD, true);
+					richEditText.applyEffect(effect, true);
 					setActionOn(action);
-					lastSelectionEffects.add(BOLD);
+					lastSelectionEffects.add(effect);
 				}
 			}
 		}
@@ -135,7 +135,7 @@ public class RichEditWidgetView extends HorizontalScrollView{
 	private ImageButton getEffectAction(Effect effect){
 		int index = -1;
 		for (int i = 0; i < supportedEffects.length; i++){
-			if (supportedEffects[i].equals(BOLD)){
+			if (supportedEffects[i].equals(effect)){
 				index = i;
 				break;
 			}
@@ -146,12 +146,12 @@ public class RichEditWidgetView extends HorizontalScrollView{
 
 	private void setActionOn(ImageButton view){
 		view.setBackgroundResource(R.drawable.background_rich_edit_action_on);
-		view.setColorFilter(CatApp.CONTEXT.getResources().getColor(R.color.md_blue_grey_500));
+		view.setColorFilter(CatNotepad.CONTEXT.getResources().getColor(R.color.md_blue_grey_500));
 	}
 
 	private void setActionOff(ImageButton view){
 		view.setBackgroundResource(0);
-		view.setColorFilter(CatApp.CONTEXT.getResources().getColor(R.color.md_blue_grey_300));
+		view.setColorFilter(CatNotepad.CONTEXT.getResources().getColor(R.color.md_blue_grey_300));
 	}
 
 	private class OnTouchListener implements View.OnTouchListener{

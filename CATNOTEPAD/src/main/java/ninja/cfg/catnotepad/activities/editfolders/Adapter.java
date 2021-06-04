@@ -17,7 +17,7 @@ import ninja.cfg.catnotepad.events.FolderDeletedEvent;
 import ninja.cfg.catnotepad.models.Folder;
 
 /**
- * Created by MohMah on 8/19/2016. modified 6/15/2020
+ * Created by MohMah on 8/19/2016.
  */
 class Adapter extends RecyclerView.Adapter{
 	private static final int VIEW_TYPE_NEW_FOLDER = 0;

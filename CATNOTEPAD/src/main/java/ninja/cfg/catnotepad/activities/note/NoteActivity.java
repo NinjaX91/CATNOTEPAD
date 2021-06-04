@@ -44,13 +44,9 @@ import ninja.cfg.catnotepad.utils.Utils;
 import ninja.cfg.catnotepad.utils.ViewUtils;
 import se.emilsjolander.intentbuilder.Extra;
 import se.emilsjolander.intentbuilder.IntentBuilder;
-import com.microsoft.appcenter.AppCenter;
-import com.microsoft.appcenter.analytics.Analytics;
-import com.microsoft.appcenter.crashes.Crashes;
-
 
 /**
- * Created by MohMah on 8/20/2016. modified 6/15/2020
+ * Created by MohMah on 8/20/2016.
  */
 @IntentBuilder
 public class NoteActivity extends AppCompatActivity{
@@ -71,8 +67,6 @@ public class NoteActivity extends AppCompatActivity{
 	private boolean shouldFireDeleteEvent = false;
 
 	@Override protected void onCreate(@Nullable Bundle savedInstanceState){
-		AppCenter.start(getApplication(), "9d319f86-e33e-4af2-bd18-8986ba723bb8",
-				Analytics.class, Crashes.class);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_note);
 		NoteActivityIntentBuilder.inject(getIntent(), this);
