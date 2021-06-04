@@ -115,7 +115,7 @@ android {
         minSdkVersion 28
         targetSdkVersion 30
 
-        versionCode 10
+        versionCode 13
         versionName "2.0.0." + versionCode + "." + buildmonth
 
         signingConfig signingConfigs.debug
@@ -192,7 +192,6 @@ dependencies {
     implementation 'com.birbit:android-priority-jobqueue:3.0.0'
     implementation 'org.ocpsoft.prettytime:prettytime:5.0.0.Final'
     implementation 'com.nbsp:library:1.09'
-    //implementation project(path: ':MAMSDK')
 //Added Values for App Center MS
     def appCenterSdkVersion = '4.1.0'
     implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"

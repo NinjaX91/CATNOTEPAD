@@ -1,1 +1,1 @@
-include ':CATNOTEPAD', ':MAMSDK'
+include ':CATNOTEPAD'
