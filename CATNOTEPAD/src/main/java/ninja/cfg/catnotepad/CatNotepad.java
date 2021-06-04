@@ -1,8 +1,13 @@
 package ninja.cfg.catnotepad;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.birbit.android.jobqueue.JobManager;
 import com.birbit.android.jobqueue.config.Configuration;
@@ -12,6 +17,8 @@ import com.raizlabs.android.dbflow.config.FlowManager;
 import com.microsoft.appcenter.AppCenter;
 import com.microsoft.appcenter.analytics.Analytics;
 import com.microsoft.appcenter.crashes.Crashes;
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.distribute.Distribute;
 
 /**
  * Created by MohMah on 8/17/2016.
@@ -26,12 +33,22 @@ public class CatNotepad extends Application {
 
         super.onCreate();
 
+
+                AppCenter.start(getApplication(), "9d319f86-e33e-4af2-bd18-8986ba723bb8",
+                Analytics.class, Crashes.class,Distribute.class);
         CONTEXT = getApplicationContext();
         FlowManager.init(this);
         Stetho.initializeWithDefaults(this);
         configureJobManager();
 
+       }
+
+    private Application getApplication() {
+
+        return null;
+
     }
+
 
     private void configureJobManager()
     {

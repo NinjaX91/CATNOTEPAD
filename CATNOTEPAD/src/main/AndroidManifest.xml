@@ -1,10 +1,11 @@
 <manifest package="ninja.cfg.catnotepad"
           xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-	      android:versionCode="14"
-	android:versionName="2.0.0.14">
+	      android:versionCode="33"
+	android:versionName="2.0.0.33">
 
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 	<application
 		    android:requestLegacyExternalStorage="true"
 			android:name="ninja.cfg.catnotepad.CatNotepad"
@@ -15,8 +16,8 @@
 			android:theme="@style/AppTheme"
 			tools:replace="android:supportsRtl"
 		    android:backupAgent="com.microsoft.intune.mam.client.app.backup.MAMDefaultBackupAgent"
-		android:versionName="2.0.0.14"
-		android:versionCode="14"
+		android:versionName="2.0.0.33"
+		android:versionCode="33"
 			>
 
 		<activity

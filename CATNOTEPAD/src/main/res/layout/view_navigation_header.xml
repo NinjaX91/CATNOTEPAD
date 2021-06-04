@@ -25,10 +25,12 @@
 		android:textStyle="bold" />
 
 	<Button
-		android:id="@+id/button"
+		android:id="@+id/dlbtn"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:text="@string/appcenter_distribute_update_dialog_download" />
+		android:text="Check for Updates"
+		
+		/>
 
 	<TextView
 		android:id="@+id/versiontxt"
@@ -39,7 +41,6 @@
 	<TextView
 		android:id="@+id/textView2"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/appcenter_distribute_download_progress_number_format" />
+		android:layout_height="wrap_content" />
 
 </LinearLayout>
