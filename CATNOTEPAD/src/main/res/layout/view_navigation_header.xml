@@ -16,31 +16,20 @@
 			/>
 
 	<TextView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:gravity="center"
-		android:text="@string/app_name"
-		android:textColor="@color/md_green_A700"
-		android:textSize="@dimen/h1"
-		android:textStyle="bold" />
-
-	<Button
-		android:id="@+id/dlbtn"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="Check for Updates"
-
-		/>
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:text="@string/app_name"
+			android:textColor="@color/primary"
+			android:textSize="@dimen/h1"
+			android:textStyle="bold"
+			/>
 
 	<TextView
-		android:id="@+id/versiontxt"
+		android:id="@+id/current_user3"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/AppVersion" />
-
-	<TextView
-		android:id="@+id/textView2"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content" />
-
+		android:layout_height="0dp"
+		android:layout_marginTop="20dp"
+		android:layout_weight="0.8"
+		android:text="Account info goes here..." />
 </LinearLayout>

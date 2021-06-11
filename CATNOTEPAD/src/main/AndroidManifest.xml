@@ -1,95 +1,104 @@
-<manifest package="ninja.cfg.catnotepad"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-	      android:versionCode="35"
-	android:versionName="2.0.0.35">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="ninja.cfg.catnotepad"
+    android:versionCode="236"
+    android:versionName="2.0.0.236">
 
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-	<application
-		    android:requestLegacyExternalStorage="true"
-			android:name="ninja.cfg.catnotepad.CatNotepad"
-			android:allowBackup="true"
-			android:icon="@mipmap/ic_launcher"
-			android:label="@string/app_name"
-			android:supportsRtl="false"
-			android:theme="@style/AppTheme"
-			tools:replace="android:supportsRtl"
-		    android:backupAgent="com.microsoft.intune.mam.client.app.backup.MAMDefaultBackupAgent"
-		android:versionName="2.0.0.35"
-		android:versionCode="35"
-			>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <application
+        android:name=".CatNotepad"
+        android:fullBackupContent="true"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:supportsRtl="false"
+        android:theme="@style/AppTheme"
+        android:versionCode="236"
+        android:versionName="2.0.0.236"
+        tools:replace="android:supportsRtl"
+        >
+        <activity android:name=".SplashScreen"
+            android:label="@string/app_name">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.home.HomeActivity">
+            <intent-filter>
 
-		<activity
-				android:name="ninja.cfg.catnotepad.activities.home.HomeActivity"
-				android:label="@string/app_name"
-				>
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-				<category android:name="android.intent.category.DEFAULT"/>
-				<category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-				<data android:scheme="file"/>
-				<data android:mimeType="*/*"/>
-				<data android:pathPattern=".*\\.nbu"/>
-				<data android:host="*"/>
-			</intent-filter>
-		</activity>
-		<activity
-				android:name="ninja.cfg.catnotepad.activities.editfolders.EditFoldersActivity"
-				android:label="Edit Folders"
-				>
-		</activity>
-		<activity
-				android:name="ninja.cfg.catnotepad.activities.note.NoteActivity"
-				android:label="Note Activity"
-				android:theme="@style/AppTheme.WhiteBackground"
-				android:windowSoftInputMode="adjustResize|stateUnchanged"
-				>
-		</activity>
-		<activity
-				android:name="ninja.cfg.catnotepad.activities.DebugActivity"
-				android:label="Debug Activity"
-				>
-		</activity>
-		<activity
-				android:name="ninja.cfg.catnotepad.activities.note.DrawingActivity"
-				android:label="Drawing Activity"
-				android:theme="@style/AppTheme.WhiteBackground"
-				>
-		</activity>
-		<activity
-				android:name="ninja.cfg.catnotepad.activities.addtofolders.AddToFoldersActivity"
-				android:label="Edit Folders"
-				>
-		</activity>
-		<activity
-			android:name="com.microsoft.appcenter.distribute.DeepLinkActivity"
-			android:theme="@android:style/Theme.NoDisplay">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW" />
+                <data android:scheme="file" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.nbu" />
+                <data android:host="*" />
+            </intent-filter>
+        </activity>
 
-				<category android:name="android.intent.category.DEFAULT" />
-				<category android:name="android.intent.category.BROWSABLE" />
+        <activity
+            android:name=".activities.editfolders.EditFoldersActivity"
+            android:label="Edit Folders" />
+        <activity
+            android:name=".activities.note.NoteActivity"
+            android:label="Note Activity"
+            android:theme="@style/AppTheme.WhiteBackground"
+            android:windowSoftInputMode="adjustResize|stateUnchanged" />
+        <activity
+            android:name=".activities.DebugActivity"
+            android:label="Debug Activity" />
+        <activity
+            android:name=".activities.note.DrawingActivity"
+            android:label="Drawing Activity"
+            android:theme="@style/AppTheme.WhiteBackground" />
+        <activity
+            android:name=".activities.addtofolders.AddToFoldersActivity"
+            android:label="Edit Folders" />
+        <activity
+            android:name="com.microsoft.appcenter.distribute.DeepLinkActivity"
+            android:theme="@android:style/Theme.NoDisplay">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-				<data
-					android:host="updates"
-					android:path="/"
-					android:scheme="appcenter" />
-			</intent-filter>
-		</activity>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-		<receiver android:name="com.microsoft.appcenter.distribute.DownloadManagerReceiver">
-			<intent-filter>
-				<action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
-				<action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
-			</intent-filter>
-		</receiver>
-	</application>
+
+                <data
+                    android:host="updates"
+                    android:path="/"
+                    android:scheme="appcenter" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name="com.microsoft.appcenter.distribute.DownloadManagerReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+                <action android:name="android.intent.action.DOWNLOAD_NOTIFICATION_CLICKED" />
+            </intent-filter>
+        </receiver>
+        <!--Intent filter to capture System Browser or Authenticator calling back to our app after sign-in-->
+        <activity
+            android:name="com.microsoft.identity.client.BrowserTabActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="msauth"
+                    android:host="ninja.cfg.catnotepad"
+                    android:path="/4frFhZcsGi4qN6Le6JCWIdTBZ8s=" />
+            </intent-filter>
+        </activity>
+    </application>
 
 </manifest>

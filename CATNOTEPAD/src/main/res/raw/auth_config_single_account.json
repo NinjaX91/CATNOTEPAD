@@ -1,13 +1,16 @@
 {
-"client_id" : "3a5b020f-2122-4df7-9d86-e5db38bc84fe",
+"client_id" : "3de609ee-026a-4b7e-a94e-9fb8f609e911",
 "authorization_user_agent" : "DEFAULT",
-"redirect_uri" : "msauth://ninja.cfg.catnotepad/ARUP23wQ8PO%2FlcLJBuT7NnMNkfc%3D",
+"redirect_uri" : "msauth://ninja.cfg.catnotepad/4frFhZcsGi4qN6Le6JCWIdTBZ8s%3D",
 "account_mode" : "SINGLE",
 "broker_redirect_uri_registered": true,
 "authorities" : [
 {
-"type": "AAD",
-"authority_url": "https://login.microsoftonline.com/common"
+  "type": "AAD",
+  "audience": {
+    "type": "AzureADMultipleOrgs",
+    "tenant_id": "organizations"
+  }
 }
 ]
 }
