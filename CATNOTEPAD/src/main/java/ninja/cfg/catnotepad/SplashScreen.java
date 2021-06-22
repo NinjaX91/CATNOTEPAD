@@ -56,6 +56,11 @@ public class SplashScreen extends AppCompatActivity {
                     public void onCreated(ISingleAccountPublicClientApplication application) {
                         mSingleAccountApp = application;
                         loadAccount();
+                        if (mSingleAccountApp == null) {
+                            return;
+                        }
+                        CatNotepadMain ();
+                        
 
                     }
 
@@ -87,7 +92,7 @@ public class SplashScreen extends AppCompatActivity {
     Button callGraphApiSilentButton;
     TextView logTextView;
     TextView currentUserTextView;
-    Button btnHome;
+    Button HomeButton;
     //When app comes to the foreground, load existing account to determine if user is signed in
     private void loadAccount() {
         if (mSingleAccountApp == null) {
@@ -123,6 +128,7 @@ public class SplashScreen extends AppCompatActivity {
         signOutButton = findViewById(R.id.clearCache);
         logTextView = findViewById(R.id.txt_log);
         currentUserTextView = findViewById(R.id.current_user);
+        HomeButton = findViewById(R.id.button);
 
         //Sign in user
         signInButton.setOnClickListener(new View.OnClickListener(){
@@ -134,7 +140,16 @@ public class SplashScreen extends AppCompatActivity {
 
             }
         });
+//Home Button listener.
+        HomeButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                if (mSingleAccountApp == null) {
+                    return;
+                }
+                CatNotepadMain ();
 
+            }
+        });
 
         //Sign out user
         signOutButton.setOnClickListener(new View.OnClickListener() {
@@ -183,6 +198,9 @@ public class SplashScreen extends AppCompatActivity {
         Intent intent = new Intent (SplashScreen.this, HomeActivity.class);
         startActivity(intent);
         finish();
+        final String MainViewText = "Launching Main View.";
+        Toast.makeText(getApplicationContext(), MainViewText, Toast.LENGTH_SHORT)
+                .show();
     }
     private void SplashScreenView(){
         Intent intent = new Intent (SplashScreen.this, SplashScreen.class);

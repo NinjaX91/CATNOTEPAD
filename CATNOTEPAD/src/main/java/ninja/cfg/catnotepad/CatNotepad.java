@@ -33,7 +33,8 @@ import com.microsoft.identity.client.IAuthenticationResult;
 import com.microsoft.identity.client.ISingleAccountPublicClientApplication;
 import com.microsoft.identity.client.SilentAuthenticationCallback;
 import com.microsoft.identity.client.exception.MsalException;
-
+import com.microsoft.intune.mam.client.app.MAMComponents;
+import com.microsoft.intune.mam.policy.MAMEnrollmentManager;
 import ninja.cfg.catnotepad.activities.home.HomeActivity;
 
 /**
@@ -44,6 +45,7 @@ public class CatNotepad extends Application {
     public static volatile Context CONTEXT;
     public static JobManager JOB_MANAGER;
 
+    private MAMEnrollmentManager mEnrollmentManager;
 
 
     @Override
@@ -54,6 +56,7 @@ public class CatNotepad extends Application {
         FlowManager.init(this);
         Stetho.initializeWithDefaults(this);
         configureJobManager();
+        mEnrollmentManager = MAMComponents.get(MAMEnrollmentManager.class);
 
     }
 

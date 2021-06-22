@@ -89,5 +89,11 @@
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/ic_splash_logo" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Home" />
+
 
 </LinearLayout>

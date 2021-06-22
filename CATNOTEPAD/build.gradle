@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 import java.util.regex.Pattern
-
+apply plugin: 'com.microsoft.intune.mam'
 
 task('increaseVersionCode') doLast{
     def manifestFile = file("src/main/AndroidManifest.xml")
@@ -101,7 +101,7 @@ android {
         minSdkVersion 28
         targetSdkVersion 30
 
-        versionCode 237
+        versionCode 290
         versionName "2.0.0." + versionCode
 
         signingConfig signingConfigs.debug
@@ -134,10 +134,12 @@ android {
 
 
     repositories {
+        //Deprecated, however cant remove due to intent builder being use.
         jcenter()
         google()
 
         mavenCentral()
+
 
         maven {
             url = 'https://oss.sonatype.org/content/repositories/snapshots'
@@ -181,7 +183,7 @@ android {
             implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
             implementation 'com.jakewharton:butterknife:10.2.3'
             annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
-            implementation 'se.emilsjolander:intentbuilder-api:0.14.0'
+          implementation 'se.emilsjolander:intentbuilder-api:0.14.0'
             annotationProcessor 'se.emilsjolander:intentbuilder-compiler:0.14.0'
             implementation 'org.greenrobot:eventbus:3.0.0'
             implementation 'com.github.greenfrvr:hashtag-view:1.2.1'
@@ -214,7 +216,22 @@ android {
            // implementation 'com.google.firebase:firebase-firestore-ktx:23.0.1'
            // implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
            // implementation 'com.google.guava:guava:26.0-android'
+            //MAM SDM Libraries
+           implementation fileTree(dir: 'MAMSDK/libs', include: ['*.jar'])
 
+            // Include the MAM SDK
+            implementation files("MAMSDK/Microsoft.Intune.MAM.SDK.aar")
+
+
+        }
+      intunemam {
+            excludeProjects = [':product:']
+        includeExternalLibraries = ["com.microsoft.*", "!com.microsoft.qux*","androidx.*"]
+          excludeClasses = ['ninja.cfg.SplashScreen']
+            excludeVariants=['savory']
+          report = true
+          verify = true
+          incremental = true
         }
         packagingOptions{
             pickFirst 'META-INF/*'
@@ -222,4 +239,8 @@ android {
         }
     }
 
+}
+
+dependencies {
+    implementation files('C:\\Temp\\CATNOTEPAD22aad\\CATNOTEPAD2\\MAMSDK\\Microsoft.Intune.MAM.SDK.aar')
 }

@@ -44,6 +44,8 @@ import ninja.cfg.catnotepad.SplashScreen;
 import ninja.cfg.catnotepad.database.FoldersDAO;
 import ninja.cfg.catnotepad.models.Folder;
 import java.util.List;
+import com.microsoft.intune.mam.client.app.MAMComponents;
+import com.microsoft.intune.mam.policy.MAMEnrollmentManager;
 
 /**
  * Created by MohMah on 8/17/2016.
@@ -56,7 +58,7 @@ public class HomeActivity extends AppCompatActivity{
 	private static final int SAVE_DATABASE_MENU_ID = -3;
 	private static final int IMPORT_DATABASE_MENU_ID = -4;
 	private static final int Auth_Sign_Out_ID = 5;
-
+	private MAMEnrollmentManager mEnrollmentManager;
 	@BindView(R.id.navigation_view) NavigationView mNavigationView;
 	@BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
 	List<Folder> latestFolders;
@@ -69,7 +71,7 @@ public class HomeActivity extends AppCompatActivity{
 
 
 		loadAccount();
-
+		mEnrollmentManager = MAMComponents.get(MAMEnrollmentManager.class);
 
 		setContentView(R.layout.activity_home);
 		ButterKnife.bind(this);

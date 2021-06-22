@@ -1,4 +1,4 @@
-package ninja.cfg.catnotepad.views;
+package ninja.cfg.catnotepad.Views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
