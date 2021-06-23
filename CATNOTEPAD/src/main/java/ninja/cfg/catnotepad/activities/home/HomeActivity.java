@@ -17,7 +17,9 @@ import com.microsoft.graph.requests.extensions.GraphServiceClient;
 import com.microsoft.identity.client.AuthenticationCallback;
 import com.microsoft.identity.client.IAccount;
 import com.microsoft.identity.client.IAuthenticationResult;
+import com.microsoft.identity.client.IPublicClientApplication;
 import com.microsoft.identity.client.ISingleAccountPublicClientApplication;
+import com.microsoft.identity.client.PublicClientApplication;
 import com.microsoft.identity.client.SilentAuthenticationCallback;
 import com.microsoft.identity.client.exception.MsalException;
 
@@ -41,9 +43,12 @@ import butterknife.ButterKnife;
 import ninja.cfg.catnotepad.CatNotepad;
 import ninja.cfg.catnotepad.R;
 import ninja.cfg.catnotepad.SplashScreen;
+import ninja.cfg.catnotepad.activities.editfolders.EditFoldersActivityIntentBuilder;
 import ninja.cfg.catnotepad.database.FoldersDAO;
 import ninja.cfg.catnotepad.models.Folder;
 import java.util.List;
+
+import com.microsoft.identity.common.internal.commands.GetCurrentAccountCommand;
 import com.microsoft.intune.mam.client.app.MAMComponents;
 import com.microsoft.intune.mam.policy.MAMEnrollmentManager;
 
@@ -58,6 +63,7 @@ public class HomeActivity extends AppCompatActivity{
 	private static final int SAVE_DATABASE_MENU_ID = -3;
 	private static final int IMPORT_DATABASE_MENU_ID = -4;
 	private static final int Auth_Sign_Out_ID = 5;
+	private static final int Get_Current_User_ID = 6;
 	private MAMEnrollmentManager mEnrollmentManager;
 	@BindView(R.id.navigation_view) NavigationView mNavigationView;
 	@BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
@@ -69,9 +75,9 @@ public class HomeActivity extends AppCompatActivity{
 
 
 
-
-		loadAccount();
 		mEnrollmentManager = MAMComponents.get(MAMEnrollmentManager.class);
+
+
 
 		setContentView(R.layout.activity_home);
 		ButterKnife.bind(this);
@@ -90,16 +96,21 @@ public class HomeActivity extends AppCompatActivity{
 					if (menuId == ALL_NOTES_MENU_ID){
 						setFragment(null);
 					}else if (menuId == EDIT_FOLDERS_MENU_ID){
-						//startActivity(new EditFoldersActivityIntentBuilder().build(HomeActivity.this));
+						startActivity(new EditFoldersActivityIntentBuilder().build(HomeActivity.this));
 					}else if (menuId == SAVE_DATABASE_MENU_ID){
 						backupRestoreDelegate.backupDataToFile();
 					}else if (menuId == IMPORT_DATABASE_MENU_ID){
 						backupRestoreDelegate.startFilePickerIntent();
-					}else if (menuId == Auth_Sign_Out_ID){
-						signoutaction();
+					}else if (menuId == Auth_Sign_Out_ID) {
 
+						Intent intent = new Intent(HomeActivity.this, SplashScreen.class);
+						startActivity(intent);
+						finish();
+					} else if (menuId == Get_Current_User_ID){
+					//loadAccount();
 					}else{
 						setFragment(FoldersDAO.getFolder(menuId));
+
 					}
 					mDrawerLayout.closeDrawer(Gravity.LEFT);
 					inflateNavigationMenus(menuId);
@@ -112,8 +123,13 @@ public class HomeActivity extends AppCompatActivity{
 
 	@Override protected void onStart(){
 		super.onStart();
+
 		inflateNavigationMenus(ALL_NOTES_MENU_ID);
+		loadAccount();
+
 	}
+
+
 
 	public void inflateNavigationMenus(int checkedItemId){
 		Menu menu = mNavigationView.getMenu();
@@ -133,16 +149,16 @@ public class HomeActivity extends AppCompatActivity{
 		menu
 				.add(Menu.NONE, EDIT_FOLDERS_MENU_ID, Menu.NONE, "Create or edit folders")
 				.setIcon(R.drawable.ic_add_white_24dp);
-		SubMenu backupSubMenu = menu.addSubMenu("Backup and restore");
-		backupSubMenu
-				.add(Menu.NONE, SAVE_DATABASE_MENU_ID, Menu.NONE, "Backup data")
-				.setIcon(R.drawable.ic_save_white_24dp);
-		backupSubMenu
-				.add(Menu.NONE, IMPORT_DATABASE_MENU_ID, Menu.NONE, "Restore data")
-				.setIcon(R.drawable.ic_restore_white_24dp);
+		//SubMenu backupSubMenu = menu.addSubMenu("Backup and restore");
+		//backupSubMenu
+		//		.add(Menu.NONE, SAVE_DATABASE_MENU_ID, Menu.NONE, "Backup data")
+		//		.setIcon(R.drawable.ic_save_white_24dp);
+		//backupSubMenu
+		//		.add(Menu.NONE, IMPORT_DATABASE_MENU_ID, Menu.NONE, "Restore data")
+		//		.setIcon(R.drawable.ic_restore_white_24dp);
 		Menu authSubMenu = menu.addSubMenu("Authentication");
 				authSubMenu
-						.add (Menu.NONE, Auth_Sign_Out_ID, Menu.NONE,"Sign out")
+						.add (Menu.NONE, Auth_Sign_Out_ID, Menu.NONE,"Main Auth Page")
 						.setIcon(R.drawable.ic_action_format_dark);
 	}
 
@@ -181,12 +197,7 @@ public class HomeActivity extends AppCompatActivity{
 	//private static final String TAG = HomeActivity.class.getSimpleName();
 
 	/* UI & Debugging Variables */
-	Button signInButton;
-	Button signOutButton;
-	Button callGraphApiInteractiveButton;
-	Button callGraphApiSilentButton;
-	TextView logTextView;
-	TextView currentUserTextView;
+	TextView currentUserTextView3;
 
 
 	//When app comes to the foreground, load existing account to determine if user is signed in
@@ -217,70 +228,11 @@ public class HomeActivity extends AppCompatActivity{
 		});
 	}
 	private void initializeUI(){
-		signOutButton = findViewById(R.id.clearCache);
-		currentUserTextView = findViewById(R.id.current_user);
+
+		//currentUserTextView3 = findViewById(R.id.);
+		currentUserTextView3.setText("My UI is the best"); //adding this for testing.
 
 
-
-		//Sign in user
-		signInButton.setOnClickListener(new View.OnClickListener(){
-			public void onClick(View v) {
-				if (mSingleAccountApp == null) {
-					return;
-				}
-				mSingleAccountApp.signIn(HomeActivity.this, null, SCOPES, getAuthInteractiveCallback());
-				Intent mainIntent=new Intent(HomeActivity.this, CatNotepad.class);
-
-				startActivity(mainIntent);
-
-			}
-		});
-//sign out clear cache public sub
-
-
-
-		//Sign out user
-		signOutButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (mSingleAccountApp == null){
-					return;
-				}
-				mSingleAccountApp.signOut(new ISingleAccountPublicClientApplication.SignOutCallback() {
-					@Override
-					public void onSignOut() {
-						updateUI(null);
-						performOperationOnSignOut();
-					}
-					@Override
-					public void onError(@NonNull MsalException exception){
-						displayError(exception);
-					}
-				});
-			}
-		});
-
-		//Interactive
-		callGraphApiInteractiveButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (mSingleAccountApp == null) {
-					return;
-				}
-				mSingleAccountApp.acquireToken(HomeActivity.this, SCOPES, getAuthInteractiveCallback());
-			}
-		});
-
-		//Silent
-		callGraphApiSilentButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (mSingleAccountApp == null){
-					return;
-				}
-				mSingleAccountApp.acquireTokenSilentAsync(SCOPES, AUTHORITY, getAuthSilentCallback());
-			}
-		});
 	}
 	private AuthenticationCallback getAuthInteractiveCallback() {
 		return new AuthenticationCallback() {
@@ -356,59 +308,51 @@ public class HomeActivity extends AppCompatActivity{
 	}
 	private void updateUI(@Nullable final IAccount account) {
 		if (account != null) {
-			signInButton.setEnabled(false);
-			signOutButton.setEnabled(true);
-			callGraphApiInteractiveButton.setEnabled(true);
-			callGraphApiSilentButton.setEnabled(true);
-			currentUserTextView.setText(account.getUsername());
 
+			currentUserTextView3.setText(account.getUsername());
 
 		} else {
-			signInButton.setEnabled(true);
-			signOutButton.setEnabled(false);
-			callGraphApiInteractiveButton.setEnabled(false);
-			callGraphApiSilentButton.setEnabled(false);
-			currentUserTextView.setText("");
 
-			logTextView.setText("");
+			currentUserTextView3.setText("");
+
 		}
 	}
 	private void displayError(@NonNull final Exception exception) {
-		logTextView.setText(exception.toString());
+		//logTextView.setText(exception.toString());
 	}
 	private void displayGraphResult(@NonNull final JsonObject graphResponse) {
-		logTextView.setText(graphResponse.toString());
+		//logTextView.setText(graphResponse.toString());
 	}
 	private void performOperationOnSignOut() {
 		final String signOutText = "Signed Out.";
-		currentUserTextView.setText("");
+		currentUserTextView3.setText("");
+
+		Toast.makeText(getApplicationContext(), signOutText, Toast.LENGTH_SHORT)
+				.show();
 
 
 	}
-	private void signoutaction() {
-		if (mSingleAccountApp == null) {
+	private void signedoutmain() {
+		final String signOutText = "Signed Out clicked";
+		currentUserTextView3.setText("");
+
+		Toast.makeText(getApplicationContext(), signOutText, Toast.LENGTH_SHORT)
+				.show();
+		if (mSingleAccountApp == null){
 			return;
 		}
-
-		mSingleAccountApp.getCurrentAccountAsync(new ISingleAccountPublicClientApplication.CurrentAccountCallback() {
+		mSingleAccountApp.signOut(new ISingleAccountPublicClientApplication.SignOutCallback() {
 			@Override
-			public void onAccountLoaded(@Nullable IAccount activeAccount) {
-				// You can use the account data to update your UI or your app database.
-				updateUI(activeAccount);
+			public void onSignOut() {
+				updateUI(null);
+				performOperationOnSignOut();
 			}
-
 			@Override
-			public void onAccountChanged(@Nullable IAccount priorAccount, @Nullable IAccount currentAccount) {
-				if (currentAccount == null) {
-					// Perform a cleanup task as the signed-in account changed.
-					performOperationOnSignOut();
-				}
-			}
-
-			@Override
-			public void onError(@NonNull MsalException exception) {
+			public void onError(@NonNull MsalException exception){
 				displayError(exception);
 			}
 		});
+
+
 	}
 }

@@ -19,33 +19,29 @@
 
 
 	<TextView
-			android:id="@+id/title"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="10dp"
-			android:ellipsize="end"
-			android:maxLines="2"
-			android:paddingLeft="10dp"
-			android:paddingRight="10dp"
-			android:textColor="@color/md_grey_700"
-			android:textSize="@dimen/h2"
-			android:textStyle="bold"
-			tools:text="عنوان یادداشت"
-			/>
+		android:id="@+id/title"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:ellipsize="end"
+		android:maxLines="2"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:textColor="@color/md_grey_700"
+		android:textSize="@dimen/h2"
+		android:textStyle="bold" />
 
 	<TextView
-			android:id="@+id/body"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="10dp"
-			android:ellipsize="end"
-			android:maxLines="10"
-			android:paddingLeft="10dp"
-			android:paddingRight="10dp"
-			android:textColor="@color/md_grey_600"
-			android:textSize="@dimen/h4"
-			tools:text="متن طولانی یادداشت"
-			/>
+		android:id="@+id/body"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:ellipsize="end"
+		android:maxLines="10"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:textColor="@color/md_grey_600"
+		android:textSize="@dimen/h4" />
 
 	<com.greenfrvr.hashtagview.HashtagView
 			android:id="@+id/folders_tag_view"

@@ -56,11 +56,6 @@ public class SplashScreen extends AppCompatActivity {
                     public void onCreated(ISingleAccountPublicClientApplication application) {
                         mSingleAccountApp = application;
                         loadAccount();
-                        if (mSingleAccountApp == null) {
-                            return;
-                        }
-                        CatNotepadMain ();
-                        
 
                     }
 
@@ -92,6 +87,7 @@ public class SplashScreen extends AppCompatActivity {
     Button callGraphApiSilentButton;
     TextView logTextView;
     TextView currentUserTextView;
+   // TextView currentUserTextView3; //commenting this out as is not working out.
     Button HomeButton;
     //When app comes to the foreground, load existing account to determine if user is signed in
     private void loadAccount() {
@@ -129,6 +125,7 @@ public class SplashScreen extends AppCompatActivity {
         logTextView = findViewById(R.id.txt_log);
         currentUserTextView = findViewById(R.id.current_user);
         HomeButton = findViewById(R.id.button);
+        //currentUserTextView3 = findViewById(R.id.current_user3); //commenting htis out as is not working out.
 
         //Sign in user
         signInButton.setOnClickListener(new View.OnClickListener(){
@@ -198,7 +195,7 @@ public class SplashScreen extends AppCompatActivity {
         Intent intent = new Intent (SplashScreen.this, HomeActivity.class);
         startActivity(intent);
         finish();
-        final String MainViewText = "Launching Main View.";
+        final String MainViewText = "User Auth Completed, Moving to Main";
         Toast.makeText(getApplicationContext(), MainViewText, Toast.LENGTH_SHORT)
                 .show();
     }
@@ -290,6 +287,7 @@ public class SplashScreen extends AppCompatActivity {
             callGraphApiInteractiveButton.setEnabled(true);
             callGraphApiSilentButton.setEnabled(true);
             currentUserTextView.setText(account.getUsername());
+            //currentUserTextView3.setText(account.getUsername()); //commenting this out as is not working.
         } else {
             signInButton.setEnabled(true);
             signOutButton.setEnabled(false);
@@ -297,6 +295,7 @@ public class SplashScreen extends AppCompatActivity {
             callGraphApiSilentButton.setEnabled(false);
             currentUserTextView.setText("");
             logTextView.setText("");
+            //currentUserTextView3.setText("");  //commenting this out as is not working out.
         }
     }
     private void displayError(@NonNull final Exception exception) {
