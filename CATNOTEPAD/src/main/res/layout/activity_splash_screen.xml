@@ -9,12 +9,6 @@
     android:orientation="vertical"
     tools:context=".SplashScreen">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="125dp"
-        app:srcCompat="@mipmap/ic_splash_logo" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,12 +59,6 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/AppVersion" />
-
-    <TextView
         android:text="Getting Graph Data..."
         android:textColor="#3f3f3f"
         android:layout_width="match_parent"
@@ -95,12 +83,17 @@
         android:layout_weight="0.8"
         android:text="Output goes here..." />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_splash_logo" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Home"
-        tools:visibility="invisible" />
+        android:text="Home" />
 
 
 </LinearLayout>

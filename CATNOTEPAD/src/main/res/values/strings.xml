@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">CATNotepad V2</string>
-    <string name="AppVersion">Version 2.1.0.X</string>
+    <string name="AppVersion">Version 2.0.0.X</string>
     <string name="print_name">CATNotepad Document</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

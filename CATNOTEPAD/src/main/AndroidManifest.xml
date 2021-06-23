@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="ninja.cfg.catnotepad"
-    android:versionCode="357"
-    android:versionName="2.0.0.357">
+    android:versionCode="289"
+    android:versionName="2.0.0.289">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
@@ -20,8 +20,8 @@
         android:backupAgent="com.microsoft.intune.mam.client.app.backup.MAMDefaultBackupAgent"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
-        android:versionCode="357"
-        android:versionName="2.0.0.357"
+        android:versionCode="289"
+        android:versionName="2.0.0.289"
         tools:replace="android:supportsRtl"
         >
         <activity android:name=".SplashScreen"
