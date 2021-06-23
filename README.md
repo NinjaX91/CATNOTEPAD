@@ -1,4 +1,5 @@
-## CATNotepad is based on the Original Project Android Notepad by MoMah, you can find his original project on https://github.com/MohMah/android-notepad.
+## CATNotepad is based on the Original Project Android Notepad by MoMah. 
+You can find his original project on https://github.com/MohMah/android-notepad.
 His notes include the following: A simple note taking app for android inspired by Google Keep.
 Following the approach of a simple note taking, i wanted to create an app that include the same concept of simple note taking. However use it as sample to integrate the following:
 1. Microsoft Azure Authentication SDK.
