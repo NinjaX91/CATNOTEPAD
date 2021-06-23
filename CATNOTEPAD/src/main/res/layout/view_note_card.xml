@@ -29,8 +29,7 @@
 		android:paddingRight="10dp"
 		android:textColor="@color/md_grey_700"
 		android:textSize="@dimen/h2"
-		android:textStyle="bold"
-		tools:text="CATNOTES" />
+		android:textStyle="bold" />
 
 	<TextView
 		android:id="@+id/body"
@@ -42,8 +41,7 @@
 		android:paddingLeft="10dp"
 		android:paddingRight="10dp"
 		android:textColor="@color/md_grey_600"
-		android:textSize="@dimen/h4"
-		tools:text="CATNOTES" />
+		android:textSize="@dimen/h4" />
 
 	<com.greenfrvr.hashtagview.HashtagView
 			android:id="@+id/folders_tag_view"

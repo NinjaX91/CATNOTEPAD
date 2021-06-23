@@ -12,35 +12,17 @@
 			android:layout_height="70dp"
 			android:layout_marginTop="25dp"
 			android:scaleType="fitCenter"
-			android:src="@mipmap/ic_launcher"
+			android:src="@mipmap/ic_splash_logo"
 			/>
 
 	<TextView
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:gravity="center"
-		android:text="@string/app_name"
-		android:textColor="@color/md_green_A700"
-		android:textSize="@dimen/h1"
-		android:textStyle="bold" />
-
-	<Button
-		android:id="@+id/dlbtn"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="Check for Updates"
-
-		/>
-
-	<TextView
-		android:id="@+id/versiontxt"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/AppVersion" />
-
-	<TextView
-		android:id="@+id/textView2"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content" />
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:text="@string/app_name"
+			android:textColor="@color/primary"
+			android:textSize="@dimen/h1"
+			android:textStyle="bold"
+			/>
 
 </LinearLayout>

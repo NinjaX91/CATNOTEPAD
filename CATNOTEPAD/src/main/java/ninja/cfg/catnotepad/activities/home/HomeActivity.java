@@ -2,8 +2,27 @@ package ninja.cfg.catnotepad.activities.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.JsonObject;
+import com.microsoft.graph.authentication.IAuthenticationProvider;
+import com.microsoft.graph.concurrency.ICallback;
+import com.microsoft.graph.core.ClientException;
+import com.microsoft.graph.http.IHttpRequest;
+import com.microsoft.graph.models.extensions.Drive;
+import com.microsoft.graph.models.extensions.IGraphServiceClient;
+import com.microsoft.graph.requests.extensions.GraphServiceClient;
+import com.microsoft.identity.client.AuthenticationCallback;
+import com.microsoft.identity.client.IAccount;
+import com.microsoft.identity.client.IAuthenticationResult;
+import com.microsoft.identity.client.IPublicClientApplication;
+import com.microsoft.identity.client.ISingleAccountPublicClientApplication;
+import com.microsoft.identity.client.PublicClientApplication;
+import com.microsoft.identity.client.SilentAuthenticationCallback;
+import com.microsoft.identity.client.exception.MsalException;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -13,25 +32,39 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
+import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ninja.cfg.catnotepad.CatNotepad;
 import ninja.cfg.catnotepad.R;
+import ninja.cfg.catnotepad.SplashScreen;
 import ninja.cfg.catnotepad.activities.editfolders.EditFoldersActivityIntentBuilder;
 import ninja.cfg.catnotepad.database.FoldersDAO;
 import ninja.cfg.catnotepad.models.Folder;
 import java.util.List;
 
+import com.microsoft.identity.common.internal.commands.GetCurrentAccountCommand;
+import com.microsoft.intune.mam.client.app.MAMComponents;
+import com.microsoft.intune.mam.policy.MAMEnrollmentManager;
+
 /**
  * Created by MohMah on 8/17/2016.
  */
 public class HomeActivity extends AppCompatActivity{
+
 	private static final String TAG = "HomeActivity";
 	private static final int ALL_NOTES_MENU_ID = -1;
 	private static final int EDIT_FOLDERS_MENU_ID = -2;
 	private static final int SAVE_DATABASE_MENU_ID = -3;
 	private static final int IMPORT_DATABASE_MENU_ID = -4;
-
+	private static final int Auth_Sign_Out_ID = 5;
+	private static final int Get_Current_User_ID = 6;
+	private MAMEnrollmentManager mEnrollmentManager;
 	@BindView(R.id.navigation_view) NavigationView mNavigationView;
 	@BindView(R.id.drawer_layout) DrawerLayout mDrawerLayout;
 	List<Folder> latestFolders;
@@ -39,6 +72,13 @@ public class HomeActivity extends AppCompatActivity{
 
 	@Override protected void onCreate(@Nullable Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+
+
+
+		mEnrollmentManager = MAMComponents.get(MAMEnrollmentManager.class);
+
+
+
 		setContentView(R.layout.activity_home);
 		ButterKnife.bind(this);
 		mDrawerLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener(){
@@ -61,20 +101,35 @@ public class HomeActivity extends AppCompatActivity{
 						backupRestoreDelegate.backupDataToFile();
 					}else if (menuId == IMPORT_DATABASE_MENU_ID){
 						backupRestoreDelegate.startFilePickerIntent();
+					}else if (menuId == Auth_Sign_Out_ID) {
+
+						Intent intent = new Intent(HomeActivity.this, SplashScreen.class);
+						startActivity(intent);
+						finish();
+					} else if (menuId == Get_Current_User_ID){
+					//loadAccount();
 					}else{
 						setFragment(FoldersDAO.getFolder(menuId));
+
 					}
 					mDrawerLayout.closeDrawer(Gravity.LEFT);
 					inflateNavigationMenus(menuId);
 					return true;
 				}
+
 			});
+
 	}
 
 	@Override protected void onStart(){
 		super.onStart();
+
 		inflateNavigationMenus(ALL_NOTES_MENU_ID);
+		loadAccount();
+
 	}
+
+
 
 	public void inflateNavigationMenus(int checkedItemId){
 		Menu menu = mNavigationView.getMenu();
@@ -94,13 +149,17 @@ public class HomeActivity extends AppCompatActivity{
 		menu
 				.add(Menu.NONE, EDIT_FOLDERS_MENU_ID, Menu.NONE, "Create or edit folders")
 				.setIcon(R.drawable.ic_add_white_24dp);
-		SubMenu backupSubMenu = menu.addSubMenu("Backup and restore");
-		backupSubMenu
-				.add(Menu.NONE, SAVE_DATABASE_MENU_ID, Menu.NONE, "Backup data")
-				.setIcon(R.drawable.ic_save_white_24dp);
-		backupSubMenu
-				.add(Menu.NONE, IMPORT_DATABASE_MENU_ID, Menu.NONE, "Restore data")
-				.setIcon(R.drawable.ic_restore_white_24dp);
+		//SubMenu backupSubMenu = menu.addSubMenu("Backup and restore");
+		//backupSubMenu
+		//		.add(Menu.NONE, SAVE_DATABASE_MENU_ID, Menu.NONE, "Backup data")
+		//		.setIcon(R.drawable.ic_save_white_24dp);
+		//backupSubMenu
+		//		.add(Menu.NONE, IMPORT_DATABASE_MENU_ID, Menu.NONE, "Restore data")
+		//		.setIcon(R.drawable.ic_restore_white_24dp);
+		Menu authSubMenu = menu.addSubMenu("Authentication");
+				authSubMenu
+						.add (Menu.NONE, Auth_Sign_Out_ID, Menu.NONE,"Main Auth Page")
+						.setIcon(R.drawable.ic_action_format_dark);
 	}
 
 	@Override public void onBackPressed(){
@@ -128,5 +187,172 @@ public class HomeActivity extends AppCompatActivity{
 		if (requestCode == BackupRestoreDelegate.PICK_RESTORE_FILE_REQUEST_CODE){
 			backupRestoreDelegate.handleFilePickedWithFilePicker(resultCode, data);
 		}
+	}
+
+	private final static String[] SCOPES = {"Files.Read"};
+	/* Azure AD v2 Configs */
+	final static String AUTHORITY = "https://login.microsoftonline.com/common";
+	private ISingleAccountPublicClientApplication mSingleAccountApp;
+
+	//private static final String TAG = HomeActivity.class.getSimpleName();
+
+	/* UI & Debugging Variables */
+	TextView currentUserTextView3;
+
+
+	//When app comes to the foreground, load existing account to determine if user is signed in
+	private void loadAccount() {
+		if (mSingleAccountApp == null) {
+			return;
+		}
+
+		mSingleAccountApp.getCurrentAccountAsync(new ISingleAccountPublicClientApplication.CurrentAccountCallback() {
+			@Override
+			public void onAccountLoaded(@Nullable IAccount activeAccount) {
+				// You can use the account data to update your UI or your app database.
+				updateUI(activeAccount);
+			}
+
+			@Override
+			public void onAccountChanged(@Nullable IAccount priorAccount, @Nullable IAccount currentAccount) {
+				if (currentAccount == null) {
+					// Perform a cleanup task as the signed-in account changed.
+					performOperationOnSignOut();
+				}
+			}
+
+			@Override
+			public void onError(@NonNull MsalException exception) {
+				displayError(exception);
+			}
+		});
+	}
+	private void initializeUI(){
+
+		//currentUserTextView3 = findViewById(R.id.);
+		currentUserTextView3.setText("My UI is the best"); //adding this for testing.
+
+
+	}
+	private AuthenticationCallback getAuthInteractiveCallback() {
+		return new AuthenticationCallback() {
+			@Override
+			public void onSuccess(IAuthenticationResult authenticationResult) {
+				/* Successfully got a token, use it to call a protected resource - MSGraph */
+				Log.d(TAG, "Successfully authenticated");
+				/* Update UI */
+				updateUI(authenticationResult.getAccount());
+				/* call graph */
+				callGraphAPI(authenticationResult);
+			}
+
+			@Override
+			public void onError(MsalException exception) {
+				/* Failed to acquireToken */
+				Log.d(TAG, "Authentication failed: " + exception.toString());
+				displayError(exception);
+			}
+			@Override
+			public void onCancel() {
+				/* User canceled the authentication */
+				Log.d(TAG, "User cancelled login.");
+			}
+		};
+	}
+
+	private SilentAuthenticationCallback getAuthSilentCallback() {
+		return new SilentAuthenticationCallback() {
+			@Override
+			public void onSuccess(IAuthenticationResult authenticationResult) {
+				Log.d(TAG, "Successfully authenticated");
+				callGraphAPI(authenticationResult);
+			}
+			@Override
+			public void onError(MsalException exception) {
+				Log.d(TAG, "Authentication failed: " + exception.toString());
+				displayError(exception);
+			}
+		};
+	}
+	private void callGraphAPI(IAuthenticationResult authenticationResult) {
+
+		final String accessToken = authenticationResult.getAccessToken();
+
+		IGraphServiceClient graphClient =
+				GraphServiceClient
+						.builder()
+						.authenticationProvider(new IAuthenticationProvider() {
+							@Override
+							public void authenticateRequest(IHttpRequest request) {
+								Log.d(TAG, "Authenticating request," + request.getRequestUrl());
+								request.addHeader("Authorization", "Bearer " + accessToken);
+							}
+						})
+						.buildClient();
+		graphClient
+				.me()
+				.drive()
+				.buildRequest()
+				.get(new ICallback<Drive>() {
+					@Override
+					public void success(final Drive drive) {
+						Log.d(TAG, "Found Drive " + drive.id);
+						displayGraphResult(drive.getRawObject());
+					}
+
+					@Override
+					public void failure(ClientException ex) {
+						displayError(ex);
+					}
+				});
+	}
+	private void updateUI(@Nullable final IAccount account) {
+		if (account != null) {
+
+			currentUserTextView3.setText(account.getUsername());
+
+		} else {
+
+			currentUserTextView3.setText("");
+
+		}
+	}
+	private void displayError(@NonNull final Exception exception) {
+		//logTextView.setText(exception.toString());
+	}
+	private void displayGraphResult(@NonNull final JsonObject graphResponse) {
+		//logTextView.setText(graphResponse.toString());
+	}
+	private void performOperationOnSignOut() {
+		final String signOutText = "Signed Out.";
+		currentUserTextView3.setText("");
+
+		Toast.makeText(getApplicationContext(), signOutText, Toast.LENGTH_SHORT)
+				.show();
+
+
+	}
+	private void signedoutmain() {
+		final String signOutText = "Signed Out clicked";
+		currentUserTextView3.setText("");
+
+		Toast.makeText(getApplicationContext(), signOutText, Toast.LENGTH_SHORT)
+				.show();
+		if (mSingleAccountApp == null){
+			return;
+		}
+		mSingleAccountApp.signOut(new ISingleAccountPublicClientApplication.SignOutCallback() {
+			@Override
+			public void onSignOut() {
+				updateUI(null);
+				performOperationOnSignOut();
+			}
+			@Override
+			public void onError(@NonNull MsalException exception){
+				displayError(exception);
+			}
+		});
+
+
 	}
 }
